@@ -11,9 +11,21 @@ langmanus-run: langmanus-setup
 	@echo "執行 Langmanus"
 	@source $(LANGMANUS_VENV)/bin/activate && cd $(LANGMANUS_DIR) && uv run main.py
 
+# 初始化 Langmanus (如果不存在則 clone 代碼庫)
+.PHONY: langmanus-init
+langmanus-init:
+	@echo "檢查 Langmanus 代碼庫"
+	@if [ ! -d "$(LANGMANUS_DIR)" ]; then \
+		echo "Langmanus 代碼庫不存在，正在克隆...";\
+		git clone https://github.com/Darwin-lfl/langmanus.git $(LANGMANUS_DIR); \
+		echo "Langmanus 代碼庫克隆完成";\
+	else \
+		echo "Langmanus 代碼庫已存在";\
+	fi
+
 # 建立 Langmanus 虛擬環境
 .PHONY: langmanus-venv
-langmanus-venv:
+langmanus-venv: langmanus-init
 	@echo "為 Langmanus 建立虛擬環境"
 	@mkdir -p $(LANGMANUS_DIR)
 	@if [ ! -d "$(LANGMANUS_VENV)" ]; then \

@@ -11,9 +11,21 @@ litellm-run: litellm-setup
 	@echo "執行 LiteLLM 腳本 (配置: $(or $(CONFIG),$(LITELLM_CONFIG)))"
 	@source $(LITELLM_VENV)/bin/activate && cd $(LITELLM_DIR) && litellm --config $(or $(CONFIG),$(LITELLM_CONFIG))
 
+# 初始化 LiteLLM
+.PHONY: litellm-init
+litellm-init:
+	@echo "初始化 LiteLLM"
+	@mkdir -p $(LITELLM_DIR)
+	@if [ ! -f "$(LITELLM_DIR)/$(LITELLM_CONFIG)" ]; then \
+		echo "LiteLLM 配置檔不存在，建立預設配置"; \
+		echo "model_list: []" > $(LITELLM_DIR)/$(LITELLM_CONFIG); \
+	else \
+		echo "LiteLLM 配置檔已存在"; \
+	fi
+
 # 建立 LiteLLM 虛擬環境
 .PHONY: litellm-venv
-litellm-venv:
+litellm-venv: litellm-init
 	@echo "為 LiteLLM 建立虛擬環境"
 	@mkdir -p $(LITELLM_DIR)
 	@if [ ! -d "$(LITELLM_VENV)" ]; then \
@@ -27,7 +39,7 @@ litellm-venv:
 .PHONY: litellm-install
 litellm-install: litellm-venv
 	@echo "安裝 LiteLLM 依賴"
-	@source $(LITELLM_VENV)/bin/activate && uv pip install litellm
+	@source $(LITELLM_VENV)/bin/activate && uv pip install 'litellm[proxy]'
 
 # 完整設定 LiteLLM
 .PHONY: litellm-setup

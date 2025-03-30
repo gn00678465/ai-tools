@@ -8,20 +8,29 @@ help:
 	@echo "LiteLLM 命令："
 	@echo "  make litellm-run           - 執行 LiteLLM (使用預設配置)"
 	@echo "  make litellm-run CONFIG=其他配置.yaml - 使用自訂配置執行"
+	@echo "  make litellm-init          - 初始化 LiteLLM 目錄和配置"
 	@echo "  make litellm-setup         - 設定 LiteLLM 環境"
 	@echo ""
 	@echo "Web-UI 命令："
 	@echo "  make webui-run             - 執行 Web-UI 應用"
 	@echo "  make webui-run IP=x.x.x.x PORT=xxxx - 使用自訂 IP 和端口執行"
+	@echo "  make webui-init            - 初始化 Web-UI (如果不存在則克隆代碼庫)"
 	@echo "  make webui-setup           - 設定 Web-UI 環境"
 	@echo ""
 	@echo "Langmanus 命令："
 	@echo "  make langmanus-run         - 執行 Langmanus"
+	@echo "  make langmanus-init        - 初始化 Langmanus (如果不存在則克隆代碼庫)"
 	@echo "  make langmanus-setup       - 設定 Langmanus 環境"
 	@echo ""
 	@echo "環境管理："
+	@echo "  make init-all              - 初始化所有應用"
 	@echo "  make setup-all             - 設定所有環境"
 	@echo "  make clean                 - 清理暫存檔和快取"
+
+# 初始化所有應用
+.PHONY: init-all
+init-all: litellm-init webui-init langmanus-init
+	@echo "所有應用初始化完成"
 
 # 設定所有環境
 .PHONY: setup-all
