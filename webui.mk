@@ -1,6 +1,7 @@
 # === Web-UI 相關設定與命令 ===
 
 # 環境與路徑設定
+SHELL := /bin/bash
 WEBUI_DIR = web-ui
 WEBUI_VENV = $(WEBUI_DIR)/.venv
 WEBUI_IP = 127.0.0.1

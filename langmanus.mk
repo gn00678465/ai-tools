@@ -1,6 +1,7 @@
 # === Langmanus 相關設定與命令 ===
 
 # 環境與路徑設定
+SHELL := /bin/bash
 LANGMANUS_DIR = langmanus
 LANGMANUS_VENV = $(LANGMANUS_DIR)/.venv
 LANGMANUS_PYTHON = 3.12
